@@ -1,0 +1,21 @@
+{
+  "name": "term3-week4project-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "cors": "^2.8.5",
+    "express": "^4.18.0",
+    "nodemon": "^2.0.15"
+  },
+  "description": ""
+}
