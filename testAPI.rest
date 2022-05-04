@@ -2,4 +2,8 @@ GET http://localhost:4500/apparel
 
 ###
 
-GET http://localhost:4500/apparel/1
+GET http://localhost:4500/productapi/1
+
+
+###
+GET http://localhost:4500/productapi

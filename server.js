@@ -1,8 +1,14 @@
-import express from "express";
+import express, {json} from "express";
+import mysql from "mysql";
 import cors from "cors";
 
-const server = express();
-server.use(cors());
+const db = mysql.createConnection({
+  host: "localhost",
+  port: 8889,
+  user: "root",
+  password: "root",
+  database: "Truncrecords",
+});
 
 let apparelData = [
   {
@@ -36,14 +42,46 @@ let apparelData = [
     prt_availability: false,
   },
 ];
+const server = express();
+server.use(cors());
+server.use(express.json());
 
-server.get("/apparel", (req, res) => {
-  res.json(apparelData);
+db.connect(error => {
+  if (error) console.log("Sorry cannot connect to db: ", error);
+  else console.log("Connected to mysql db");
 });
 
-server.get("/apparel/:id", (req, res) => {
-  res.json(apparelData.find(x => x.id == req.params.id));
+server.get("/productapi", (req, res) => {
+  let allPro = "CALL `All_products`()";
+  db.query(allPro, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.json(data[0]);
+      // console.log(data);
+    }
+  });
 });
+
+server.get("/productapi/:id", (req, res) => {
+  let allPro = "CALL `All_products`()";
+  let proID = req.params.id;
+  db.query(allPro, (error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.json(data[0].find(x => x.ProductID == proID));
+    }
+  });
+});
+
+// server.get("/apparel", (req, res) => {
+//   res.json(apparelData);
+// });
+
+// server.get("/apparel/:id", (req, res) => {
+//   res.json(apparelData.find(x => x.id == req.params.id));
+// });
 
 server.listen(4500, function () {
   console.log("Node Express server is now running on port 4500");
