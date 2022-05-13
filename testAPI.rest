@@ -1,4 +1,8 @@
-GET http://localhost:4500/apparel
+@url = http://localhost:4500
+
+
+
+GET http://localhost:4500/productapi
 
 ###
 
@@ -6,4 +10,65 @@ GET http://localhost:4500/productapi/1
 
 
 ###
-GET http://localhost:4500/productapi
+POST {{url}}/signupapi
+Content-Type: application/json
+
+{
+  "user_name":"Smith",
+  "password":234
+}
+
+###
+POST {{url}}/login
+Content-Type:  application/json
+
+{
+  "user_name":"Smith",
+  "password":234
+}
+
+###
+POST  {{url}}/addnewproduct
+Content-Type:  application/json
+
+{
+  "product_name":"test",
+  "product_desc":"test",
+  "product_price": 123,
+  "product_image1": "test",
+  "product_image2": "test",
+  "product_availability": 12
+}
+
+
+###
+PUT {{url}}/update
+Content-Type:  application/json
+
+{
+  "ProductID":6,
+  "product_name":"test",
+  "product_desc":"test",
+  "product_price":123,
+  "product_image1":"test",
+  "product_image2":"test",
+  "product_availability":1,
+  "display":"none"
+}
+
+###
+PUT {{url}}/updatedisplay
+Content-Type:  application/json
+
+{
+   "ProductID":20,
+   "display":"none"
+}
+
+###
+GET {{url}}/product/2
+
+###
+DELETE  {{url}}/deleteproduct/19
+Content-Type:  application/json
+
