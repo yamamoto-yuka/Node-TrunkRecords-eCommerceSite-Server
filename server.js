@@ -1,7 +1,6 @@
 import express, { json } from "express";
 import mysql from "mysql";
 import cors from "cors";
-import e from "express";
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -117,27 +116,6 @@ server.post("/addnewproduct", (req, res) => {
     })
 })
 
-// //Add new images
-// server.post("/addnewimages", (req, res) => {
-//     let product_image1 = req.body.product_image1;
-//     let product_image2 = req.body.product_image2;
-//     let SP = "CALL `ImageInsert`(?,?)";
-//     db.query(SP, [product_image1, product_image2], (error, data, fields) => {
-//         if (error) {
-//             res.json({
-//                 imageinsert: false,
-//                 message: error
-//             })
-//         } else {
-//             res.json({
-//                 data: data[0],
-//                 imageinsert: true,
-//                 message: "New images inserted."
-//             })
-//         }
-//     })
-// })
-
 // update
 server.put('/update', (req, res) => {
     let ProductID = req.body.ProductID;
@@ -158,15 +136,14 @@ server.put('/update', (req, res) => {
     })
 })
 
-server.put('/updatedisplay', (req, res) => {
+server.put('/toggledisplay', (req, res) => {
     let ProductID = req.body.ProductID;
-    let display = req.body.display;
-    let SP = " CALL `updateDisplay`(?, ?)";
-    db.query(SP, [ProductID, display], (error, data) => {
+    let SP = " CALL `display_toggle`(?)";
+    db.query(SP, [ProductID], (error, data) => {
         if (error) {
-            res.json({ updatediplay: false, message: error });
+            res.json({ diplay: false, message: error });
         } else {
-            res.json({ data: data[0], updatediplay: true, message: "Dispaly data updated." })
+            res.json({ data: data[0], diplay: true, message: "Dispaly data updated." })
         }
     })
 })

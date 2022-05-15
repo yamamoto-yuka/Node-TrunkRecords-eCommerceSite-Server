@@ -46,29 +46,28 @@ PUT {{url}}/update
 Content-Type:  application/json
 
 {
-  "ProductID":6,
+  "ProductID":12,
   "product_name":"test",
   "product_desc":"test",
   "product_price":123,
   "product_image1":"test",
   "product_image2":"test",
   "product_availability":1,
-  "display":"none"
+  "display":0
 }
 
 ###
-PUT {{url}}/updatedisplay
+PUT {{url}}/toggledisplay
 Content-Type:  application/json
 
 {
-   "ProductID":20,
-   "display":"none"
+  "ProductID":2
 }
 
 ###
 GET {{url}}/product/2
 
 ###
-DELETE  {{url}}/deleteproduct/19
+DELETE  {{url}}/deleteproduct/12
 Content-Type:  application/json
 
