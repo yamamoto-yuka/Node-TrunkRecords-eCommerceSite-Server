@@ -18,34 +18,37 @@ db.connect(error => {
     if (error) console.log("Sorry cannot connect to db: ", error);
     else console.log("Connected to mysql db");
 });
-
-server.get("/productapi", (req, res) => {
+// GET ALL PRODUCTS
+server.get("/product", (req, res) => {
     let allPro = "CALL `All_products`()";
     db.query(allPro, (error, data) => {
         if (error) {
             console.log(error);
         } else {
             res.json(data[0]);
-            // console.log(data);
         }
     });
 });
 
-server.get("/productapi/:id", (req, res) => {
-    let allPro = "CALL `All_products`()";
-    let proID = req.params.id;
-    db.query(allPro, (error, data) => {
+// GET PRODUCT DATA BY ID
+server.get('/product/:id', (req, res) => {
+    let productID = req.params.id;
+    let SP = "CALL `getProductID`(?)";
+    db.query(SP, [productID], (error, data) => {
         if (error) {
-            console.log(error);
+            res.json({ productid: false, message: error })
         } else {
-            res.json(data[0].find(x => x.ProductID == proID));
+            if (data[0].length === 0) {
+                res.json({ productid: false, message: "No product with that ID exists" })
+            } else {
+                res.json({ productid: true, message: "ProductID successfully", productData: data[0] })
+            }
         }
-    });
-});
+    })
+})
 
-// Admin
-// Sign up
-server.post('/signupapi', (req, res) => {
+// POST (SIGN UP)
+server.post('/signup', (req, res) => {
     let user_name = req.body.user_name;
     let password = req.body.password;
     let SP = " CALL `Signup`(?, ?)";
@@ -65,7 +68,7 @@ server.post('/signupapi', (req, res) => {
     })
 })
 
-// log in
+// POST (LOG IN)
 server.post("/login", (req, res) => {
     let user_name = req.body.user_name;
     let password = req.body.password;
@@ -91,8 +94,8 @@ server.post("/login", (req, res) => {
     })
 })
 
-// Add new product
-server.post("/addnewproduct", (req, res) => {
+// POST NEW PRODUCT
+server.post("/product", (req, res) => {
     let product_name = req.body.product_name;
     let product_desc = req.body.product_desc;
     let product_price = req.body.product_price;
@@ -116,8 +119,8 @@ server.post("/addnewproduct", (req, res) => {
     })
 })
 
-// update
-server.put('/update', (req, res) => {
+// PUT NEW PRODUCT
+server.put('/product', (req, res) => {
     let ProductID = req.body.ProductID;
     let product_name = req.body.product_name;
     let product_desc = req.body.product_desc;
@@ -136,9 +139,10 @@ server.put('/update', (req, res) => {
     })
 })
 
-server.put('/toggledisplay', (req, res) => {
+// PUT NEW DISPLAY MODE
+server.put('/toggle', (req, res) => {
     let ProductID = req.body.ProductID;
-    let SP = " CALL `display_toggle`(?)";
+    let SP = " CALL `toggle`(?)";
     db.query(SP, [ProductID], (error, data) => {
         if (error) {
             res.json({ diplay: false, message: error });
@@ -148,23 +152,8 @@ server.put('/toggledisplay', (req, res) => {
     })
 })
 
-server.get('/product/:id', (req, res) => {
-    let productID = req.params.id;
-    let SP = "CALL `getProductID`(?)";
-    db.query(SP, [productID], (error, data) => {
-        if (error) {
-            res.json({ productid: false, message: error })
-        } else {
-            if (data[0].length === 0) {
-                res.json({ productid: false, message: "No product with that ID exists" })
-            } else {
-                res.json({ productid: true, message: "ProductID successfully", productData: data[0] })
-            }
-        }
-    })
-})
-
-server.delete('/deleteproduct/:id', (req, res) => {
+// DELETE PRODUCT
+server.delete('/product/:id', (req, res) => {
     let ProductID = req.params.id;
     let SP = "CALL `delete`(?)";
     db.query(SP, [ProductID], (error, data) => {
