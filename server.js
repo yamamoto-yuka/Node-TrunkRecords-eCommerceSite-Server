@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import mysql from "mysql";
 import cors from "cors";
+import multer from "multer";
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -10,14 +11,32 @@ const db = mysql.createConnection({
     database: "Truncrecords",
 });
 
-const server = express();
-server.use(cors());
-server.use(express.json());
-
 db.connect(error => {
     if (error) console.log("Sorry cannot connect to db: ", error);
     else console.log("Connected to mysql db");
 });
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, Data.now() + '-' + file.originalname)
+    }
+})
+
+const fileupload = multer({ storage: storage });
+
+const server = express();
+server.use(cors());
+server.use(express.json());
+server.use(express.static('uploads'));
+
+// File upload
+server.post('/upload', fileupload.single("image"), (req, res) => {
+    res.json('Upload success');
+})
+
 // GET ALL PRODUCTS
 server.get("/product", (req, res) => {
     let allPro = "CALL `All_products`()";
@@ -145,9 +164,9 @@ server.put('/toggle', (req, res) => {
     let SP = " CALL `toggle`(?)";
     db.query(SP, [ProductID], (error, data) => {
         if (error) {
-            res.json({ diplay: false, message: error });
+            res.json({ display: false, message: error });
         } else {
-            res.json({ data: data[0], diplay: true, message: "Dispaly data updated." })
+            res.json({ data: data[0], display: true, message: "Dispaly data updated." })
         }
     })
 })

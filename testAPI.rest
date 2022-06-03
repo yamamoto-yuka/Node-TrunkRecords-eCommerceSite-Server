@@ -70,4 +70,13 @@ GET {{url}}/product/2
 ###
 DELETE  {{url}}/deleteproduct/12
 
+###
+POST {{url}}/upload
+Content-Type: multipart/form-data; boundary=imageboundary
 
+--imageboundary
+Content-Disposition: form-data; name='image'; filename = "image1.jpg"
+Content-Type: image/png
+
+< ./image1.jpg
+--imageboundary
