@@ -1,20 +1,59 @@
 @url = http://localhost:4500
 
-
-
 GET http://localhost:4500/product
 
 ###
-
 GET http://localhost:4500/product/1
+
+###
+POST  {{url}}/product
+Content-Type:  application/json
+
+{
+  "product_name":"test",
+  "product_desc":"test",
+  "product_price": 123,
+  "product_image1": "test",
+  "product_image2": "test",
+  "product_quantity": 12
+}
 
 
 ###
-POST {{url}}/signupapi
+PUT {{url}}/product
+Content-Type:  application/json
+
+{
+  "ProductID":4,
+  "product_name":"test",
+  "product_desc":"test",
+  "product_price":123,
+  "product_image1":"test",
+  "product_image2":"test",
+  "product_quantity":1
+}
+
+###
+PUT {{url}}/displayupdate
+Content-Type:  application/json
+
+{
+  "ProductID":2
+}
+
+###
+GET {{url}}/product/2
+
+###
+DELETE  {{url}}/product/7
+
+
+###
+POST {{url}}/signup
 Content-Type: application/json
 
 {
-  "user_name":"Smith",
+  "username":"Smith",
   "password":234
 }
 
@@ -27,48 +66,6 @@ Content-Type:  application/json
   "password":234
 }
 
-###
-POST  {{url}}/addnewproduct
-Content-Type:  application/json
-
-{
-  "product_name":"test",
-  "product_desc":"test",
-  "product_price": 123,
-  "product_image1": "test",
-  "product_image2": "test",
-  "product_availability": 12
-}
-
-
-###
-PUT {{url}}/update
-Content-Type:  application/json
-
-{
-  "ProductID":12,
-  "product_name":"test",
-  "product_desc":"test",
-  "product_price":123,
-  "product_image1":"test",
-  "product_image2":"test",
-  "product_availability":1,
-  "display":0
-}
-
-###
-PUT {{url}}/toggledisplay
-Content-Type:  application/json
-
-{
-  "ProductID":2
-}
-
-###
-GET {{url}}/product/2
-
-###
-DELETE  {{url}}/deleteproduct/12
 
 ###
 POST {{url}}/upload
