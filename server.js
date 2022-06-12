@@ -187,10 +187,10 @@ server.post("/signup", (req, res) => {
 
 // POST (ADMIN PORTAL LOG IN)
 server.post("/login", (req, res) => {
-  let user_name = req.body.user_name;
+  let username = req.body.username;
   let password = req.body.password;
-  let SP = "CALL `Login`(?,?)";
-  db.query(SP, [user_name, password], (error, data, fields) => {
+  let SP = "CALL `logIn`(?,?)";
+  db.query(SP, [username, password], (error, data) => {
     if (error) {
       res.json({ErrorMessage: error});
     } else {
