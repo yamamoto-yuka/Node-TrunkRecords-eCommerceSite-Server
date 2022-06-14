@@ -154,11 +154,10 @@ server.delete("/product/:id", (req, res) => {
       res.json({delete: false, message: error});
     } else {
       let del_success = deleteStatus[0][0].DEL_SUCCESS;
-      if(del_success === 1){
-        res.json({delStatus: del_success, message:'Successfully deleted!'})
-      }
-      else{
-        res.json({delStatus: del_success, message:'ID not found' })
+      if (del_success === 1) {
+        res.json({delStatus: del_success, message: "Successfully deleted!"});
+      } else {
+        res.json({delStatus: del_success, message: "ID not found"});
       }
     }
   });
